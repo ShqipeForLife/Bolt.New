@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Hero ─────────────────────────────────────────── */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #020617;
+}
+
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop');
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  animation: heroBgZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes heroBgZoom {
+  0%   { transform: scale(1.05) translateX(0); }
+  100% { transform: scale(1.12) translateX(-20px); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right,  rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0.70) 50%, rgba(2, 6, 23, 0.85) 100%),
+    linear-gradient(to bottom, rgba(2, 6, 23, 0.30) 0%, rgba(2, 6, 23, 0.60) 100%);
+}
+
+/* Scan line effect */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.6) 50%, transparent 100%);
+  animation: scan 6s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes scan {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 0.6; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Grid overlay */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+/* Glowing orbs */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* ── Floating UI Panels ───────────────────────────── */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.05),
+    0 25px 50px -12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: panelFloat 6s ease-in-out infinite;
+}
+
+.glass-panel-alt {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.05),
+    0 25px 50px -12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: panelFloat 7s ease-in-out infinite reverse;
+}
+
+@keyframes panelFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(0.5deg); }
+}
+
+/* CarPlay app icon */
+.app-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.app-icon:hover {
+  transform: scale(1.08);
+}
+
+/* Rainbow progress bar */
+.rainbow-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #3b82f6, #22d3ee, #34d399, #fbbf24, #f87171, #a78bfa, #3b82f6);
+  background-size: 300% 100%;
+  animation: rainbowShift 4s linear infinite;
+}
+
+@keyframes rainbowShift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* Signal dots animation */
+.signal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22d3ee;
+  animation: signalPulse 1.4s ease-in-out infinite;
+}
+.signal-dot:nth-child(2) { animation-delay: 0.2s; }
+.signal-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes signalPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Components ───────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white rounded-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    box-shadow: 0 4px 24px rgba(59, 130, 246, 0.35);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.5);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white rounded-xl transition-all duration-300;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+  }
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+  }
+
+  .badge-pill {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full;
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    color: #67e8f9;
+    backdrop-filter: blur(10px);
+  }
+
+  .service-card {
+    @apply relative bg-white rounded-2xl p-6 border border-slate-100 transition-all duration-300 cursor-default;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15), 0 4px 16px rgba(0,0,0,0.08);
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+
+  .service-card .icon-wrap {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  }
+  .service-card:hover .icon-wrap {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  }
+  .service-card .icon-wrap svg {
+    @apply text-brand-600 transition-colors duration-300;
+  }
+  .service-card:hover .icon-wrap svg {
+    @apply text-white;
+  }
+
+  .benefit-card {
+    @apply flex items-center gap-4 p-6 rounded-2xl border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .benefit-card:hover {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .form-input {
+    @apply w-full px-4 py-3 rounded-xl border text-slate-900 transition-all duration-200;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    background: #fff;
+  }
+}
+
+@layer utilities {
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #60a5fa, #22d3ee, #67e8f9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-label {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase mb-4;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.1));
+    border: 1px solid rgba(59,130,246,0.2);
+    color: #60a5fa;
+  }
+}
